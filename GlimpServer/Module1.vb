@@ -91,15 +91,15 @@ Module Module1
     Private Glimp0値列前日_Json As String = ""                'glimp data 前日 json format
     Private Glimp0値列前々日_Json As String = ""              'glimp data 前々日 json format
 
-    Private 生Glimp0値列当日(D60x24 + 2, 1) As Single         'series glimp data 当日
-    Private 生Glimp0値列前日(D60x24 + 2, 1) As Single         'series glimp data 前日
-    Private 補間Glimp0値列当日(D60x24 + 2, 1) As Single       'series glimp data 当日
-    Private 補間Glimp0値列前日(D60x24 + 2, 1) As Single       'series glimp data 前日
+    Private 補間Glimp0値列当日(D60x24 + 2, 1) As Single         'series glimp data 当日
+    Private 補間Glimp0値列前日(D60x24 + 2, 1) As Single         'series glimp data 前日
+    Private 間詰Glimp0値列当日(D60x24 + 2, 1) As Single       'series glimp data 当日
+    Private 間詰Glimp0値列前日(D60x24 + 2, 1) As Single       'series glimp data 前日
 
-    Private 生センサ値列当日(D60x24 + 2, 1) As Single         'series row data 当日
-    Private 生センサ値列前日(D60x24 + 2, 1) As Single         'series row data 前日
-    Private 補間センサ値列当日(D60x24 + 2, 1) As Single       'series row data 当日
-    Private 補間センサ値列前日(D60x24 + 2, 1) As Single       'series row data 前日
+    Private 補間センサ値列当日(D60x24 + 2, 1) As Single         'series row data 当日
+    Private 補間センサ値列前日(D60x24 + 2, 1) As Single         'series row data 前日
+    Private 間詰センサ値列当日(D60x24 + 2, 1) As Single       'series row data 当日
+    Private 間詰センサ値列前日(D60x24 + 2, 1) As Single       'series row data 前日
 
     Private 最終計測時刻 As Integer
 
@@ -152,17 +152,17 @@ Module Module1
         Glimp0値列前日_Json = ""                  'glimp data 前日 json format
         Glimp0値列前々日_Json = ""                'glimp data 前々日 json format
 
-        ReDim 生センサ値列当日(D60x24 + 2, 1)   'series row data 当日
-        ReDim 生センサ値列前日(D60x24 + 2, 1)   'series row data 前日
-        ReDim 生Glimp0値列当日(D60x24 + 2, 1)    'series glimp data 当日
-        ReDim 生Glimp0値列前日(D60x24 + 2, 1)    'series glimp data 前日
+        ReDim 補間センサ値列当日(D60x24 + 2, 1)   'series row data 当日
+        ReDim 補間センサ値列前日(D60x24 + 2, 1)   'series row data 前日
+        ReDim 補間Glimp0値列当日(D60x24 + 2, 1)    'series glimp data 当日
+        ReDim 補間Glimp0値列前日(D60x24 + 2, 1)    'series glimp data 前日
 
         Dim i As Integer
         For i = 0 To D60x24 + 2
-            生センサ値列当日(i, 0) = (i - 1) * 1.0 : 生センサ値列当日(i, 1) = -1.0
-            生センサ値列前日(i, 0) = (i - 1) * 1.0 : 生センサ値列前日(i, 1) = -1.0
-            生Glimp0値列当日(i, 0) = (i - 1) * 1.0 : 生Glimp0値列当日(i, 1) = -1.0
-            生Glimp0値列前日(i, 0) = (i - 1) * 1.0 : 生Glimp0値列前日(i, 1) = -1.0
+            補間センサ値列当日(i, 0) = (i - 1) * 1.0 : 補間センサ値列当日(i, 1) = -1.0
+            補間センサ値列前日(i, 0) = (i - 1) * 1.0 : 補間センサ値列前日(i, 1) = -1.0
+            補間Glimp0値列当日(i, 0) = (i - 1) * 1.0 : 補間Glimp0値列当日(i, 1) = -1.0
+            補間Glimp0値列前日(i, 0) = (i - 1) * 1.0 : 補間Glimp0値列前日(i, 1) = -1.0
         Next
         For i = 0 To D60x24
             補間インスリンレベル値列当日(i, 0) = i * 1.0 : 補間インスリンレベル値列当日(i, 1) = 0.0
@@ -313,13 +313,13 @@ Module Module1
                 センサ値列当日_Json = センサ値列当日_Json & ",[" & e(16) & "," & e(5) & "]"
             End If
             If センサID = e(8) Then
-                生Glimp0値列当日(e(16) + 1, 1) = e(6)
-                生センサ値列当日(e(16) + 1, 1) = e(5)
+                補間Glimp0値列当日(e(16) + 1, 1) = e(6)
+                補間センサ値列当日(e(16) + 1, 1) = e(5)
             Else
-                生Glimp0値列当日(e(16), 1) = e(6)
-                生センサ値列当日(e(16), 1) = e(5)
-                生Glimp0値列当日(e(16) + 1, 1) = -2
-                生センサ値列当日(e(16) + 1, 1) = -2
+                補間Glimp0値列当日(e(16), 1) = e(6)
+                補間センサ値列当日(e(16), 1) = e(5)
+                補間Glimp0値列当日(e(16) + 1, 1) = -2
+                補間センサ値列当日(e(16) + 1, 1) = -2
                 センサID = e(8)
             End If
             t_bk1 = D60x24 + e(16)
@@ -382,34 +382,34 @@ Module Module1
         If e(7) = "3" Or e(7) = "5" Then
             If Glimp0値列前日_Json = "" Then
                 str前日日付 = e(0) & "," & e(1)
-                生Glimp0値列当日(0, 0) = -1.0 * (D60x24 - e(16))
-                生Glimp0値列当日(0, 1) = e(6)
+                補間Glimp0値列当日(0, 0) = -1.0 * (D60x24 - e(16))
+                補間Glimp0値列当日(0, 1) = e(6)
                 Glimp0値列当日_Json = Glimp0値列当日_Json & "]"
                 Glimp0値列前日_Json = "[[" & e(16) & "," & e(6) & "]"
                 graphFn前日 = graphFn前日 & e(1).Replace("/", "-")
-                生Glimp0値列前日(D60x24 + 2, 0) = t_bk1
-                生Glimp0値列前日(D60x24 + 2, 1) = g_bk1
+                補間Glimp0値列前日(D60x24 + 2, 0) = t_bk1
+                補間Glimp0値列前日(D60x24 + 2, 1) = g_bk1
             Else
                 Glimp0値列前日_Json = Glimp0値列前日_Json & ",[" & e(16) & "," & e(6) & "]"
             End If
             If センサ値列前日_Json = "" Then
-                生センサ値列当日(0, 0) = -1.0 * (D60x24 - e(16))
-                生センサ値列当日(0, 1) = e(5)
+                補間センサ値列当日(0, 0) = -1.0 * (D60x24 - e(16))
+                補間センサ値列当日(0, 1) = e(5)
                 センサ値列当日_Json = センサ値列当日_Json & "]"
                 センサ値列前日_Json = "[[" & e(16) & "," & e(5) & "]"
-                生センサ値列前日(D60x24 + 2, 0) = t_bk1
-                生センサ値列前日(D60x24 + 2, 1) = r_bk1
+                補間センサ値列前日(D60x24 + 2, 0) = t_bk1
+                補間センサ値列前日(D60x24 + 2, 1) = r_bk1
             Else
                 センサ値列前日_Json = センサ値列前日_Json & ",[" & e(16) & "," & e(5) & "]"
             End If
             If センサID = e(8) Then
-                生Glimp0値列前日(e(16) + 1, 1) = e(6)
-                生センサ値列前日(e(16) + 1, 1) = e(5)
+                補間Glimp0値列前日(e(16) + 1, 1) = e(6)
+                補間センサ値列前日(e(16) + 1, 1) = e(5)
             Else
-                生Glimp0値列前日(e(16), 1) = e(6)
-                生センサ値列前日(e(16), 1) = e(5)
-                生Glimp0値列前日(e(16) + 1, 1) = -2
-                生センサ値列前日(e(16) + 1, 1) = -2
+                補間Glimp0値列前日(e(16), 1) = e(6)
+                補間センサ値列前日(e(16), 1) = e(5)
+                補間Glimp0値列前日(e(16) + 1, 1) = -2
+                補間センサ値列前日(e(16) + 1, 1) = -2
                 センサID = e(8)
             End If
             t_bk1 = D60x24 + e(16)
@@ -493,14 +493,14 @@ Module Module1
         Dim ds As Single                                            'インスリンレベル
         If e(7) = "3" Or e(7) = "5" Then
             If Glimp0値列前々日_Json = "" Then
-                生Glimp0値列前日(0, 0) = -1.0 * (D60x24 - e(16))
-                生Glimp0値列前日(0, 1) = e(6)
+                補間Glimp0値列前日(0, 0) = -1.0 * (D60x24 - e(16))
+                補間Glimp0値列前日(0, 1) = e(6)
                 Glimp0値列前日_Json = Glimp0値列前日_Json & "]"
                 Glimp0値列前々日_Json = "[["
             End If
             If センサ値列前々日_Json = "" Then
-                生センサ値列前日(0, 0) = -1.0 * (D60x24 - e(16))
-                生センサ値列前日(0, 1) = e(5)
+                補間センサ値列前日(0, 0) = -1.0 * (D60x24 - e(16))
+                補間センサ値列前日(0, 1) = e(5)
                 センサ値列前日_Json = センサ値列前日_Json & "]"
                 センサ値列前々日_Json = "[["
             End If
@@ -617,15 +617,15 @@ Module Module1
         Dim rx1 As Single, ry1 As Single, rx2 As Single, ry2 As Single
         Dim rp1 As Single, rq1 As Single, rp2 As Single, rq2 As Single
 
-        gy1 = 生Glimp0値列当日(最終計測時刻 + 1, 1) : gx1 = 生Glimp0値列当日(最終計測時刻 + 1, 0)
-        ry1 = 生センサ値列当日(最終計測時刻 + 1, 1) : rx1 = gx1
+        gy1 = 補間Glimp0値列当日(最終計測時刻 + 1, 1) : gx1 = 補間Glimp0値列当日(最終計測時刻 + 1, 0)
+        ry1 = 補間センサ値列当日(最終計測時刻 + 1, 1) : rx1 = gx1
         gq1 = gy1 : gp1 = gx1 : 直近Glimp0値列(4, 0) = gp1 : 直近Glimp0値列(4, 1) = gq1
         rq1 = ry1 : rp1 = rx1 : 直近センサ値列(4, 0) = rp1 : 直近センサ値列(4, 1) = rq1
         If 解析範囲 <= 最終計測時刻 Then ' 00:40 <= 最終計測時刻
             For i = 解析単位 To 解析範囲 Step 解析単位
                 j = 最終計測時刻 - i + 1
-                gy2 = 生Glimp0値列当日(j, 1) : gx2 = 生Glimp0値列当日(j, 0)
-                ry2 = 生センサ値列当日(j, 1) : rx2 = gx2
+                gy2 = 補間Glimp0値列当日(j, 1) : gx2 = 補間Glimp0値列当日(j, 0)
+                ry2 = 補間センサ値列当日(j, 1) : rx2 = gx2
                 dGlimp0値列8(8 - i / 解析単位) = (gy2 - gy1) / (gx2 - gx1)
                 dセンサ値列8(8 - i / 解析単位) = (ry2 - ry1) / (rx2 - rx1)
                 If (i Mod 解析単位x2) = 0 Then
@@ -644,8 +644,8 @@ Module Module1
             For i = 解析単位 To 解析範囲 Step 解析単位
                 If (最終計測時刻 - i) >= 0 Then
                     j = 最終計測時刻 - i + 1
-                    gy2 = 生Glimp0値列当日(j, 1) : gx2 = 生Glimp0値列当日(j, 0)
-                    ry2 = 生センサ値列当日(j, 1) : rx2 = gx2
+                    gy2 = 補間Glimp0値列当日(j, 1) : gx2 = 補間Glimp0値列当日(j, 0)
+                    ry2 = 補間センサ値列当日(j, 1) : rx2 = gx2
                     dGlimp0値列8(8 - i / 解析単位) = (gy2 - gy1) / (gx2 - gx1)
                     dセンサ値列8(8 - i / 解析単位) = (ry2 - ry1) / (rx2 - rx1)
                     If (i Mod 解析単位x2) = 0 Then
@@ -659,8 +659,8 @@ Module Module1
                     End If
                 Else
                     j = D60x24 + 最終計測時刻 - i + 1
-                    gy2 = 生Glimp0値列前日(j, 1) : gx2 = 生Glimp0値列前日(j, 0) - D60x24
-                    ry2 = 生センサ値列前日(j, 1) : rx2 = gx2
+                    gy2 = 補間Glimp0値列前日(j, 1) : gx2 = 補間Glimp0値列前日(j, 0) - D60x24
+                    ry2 = 補間センサ値列前日(j, 1) : rx2 = gx2
                     dGlimp0値列8(8 - i / 解析単位) = (gy2 - gy1) / (gx2 - gx1)
                     dセンサ値列8(8 - i / 解析単位) = (ry2 - ry1) / (rx2 - rx1)
                     If (i Mod 解析単位x2) = 0 Then
@@ -680,13 +680,13 @@ Module Module1
             For i = 解析単位 To 解析範囲 Step 解析単位
                 If (最終計測時刻 - i) >= 0 Then
                     j = 最終計測時刻 - i + 1
-                    gx2 = 生Glimp0値列当日(j, 0) : gy2 = 生Glimp0値列当日(j, 1)
+                    gx2 = 補間Glimp0値列当日(j, 0) : gy2 = 補間Glimp0値列当日(j, 1)
                     dGlimp0値列8(8 - i / 解析単位) = (gy2 - gy1) / (gx2 - gx1)
                     dセンサ値列8(8 - i / 解析単位) = (ry2 - ry1) / (rx2 - rx1)
                 Else
                     j = D60x24 + 最終計測時刻 - i + 1
-                    gy2 = 生Glimp0値列前日(j, 1) : gx2 = 生Glimp0値列前日(j, 0) - D60x24
-                    ry2 = 生センサ値列前日(j, 1) : rx2 = gx2
+                    gy2 = 補間Glimp0値列前日(j, 1) : gx2 = 補間Glimp0値列前日(j, 0) - D60x24
+                    ry2 = 補間センサ値列前日(j, 1) : rx2 = gx2
                     dGlimp0値列8(8 - i / 解析単位) = (gy2 - gy1) / (gx2 - gx1)
                     dセンサ値列8(8 - i / 解析単位) = (ry2 - ry1) / (rx2 - rx1)
                     If (i Mod 解析単位x2) = 0 Then
@@ -705,8 +705,8 @@ Module Module1
         Else '00:00 <= 最終計測時刻 < 00:05
             For i = 解析単位 To 解析範囲 Step 解析単位
                 j = D60x24 + 最終計測時刻 - i + 1
-                gy2 = 生Glimp0値列前日(j, 1) : gx2 = 生Glimp0値列前日(j, 0) - D60x24
-                ry2 = 生センサ値列前日(j, 1) : rx2 = gx2
+                gy2 = 補間Glimp0値列前日(j, 1) : gx2 = 補間Glimp0値列前日(j, 0) - D60x24
+                ry2 = 補間センサ値列前日(j, 1) : rx2 = gx2
                 dGlimp0値列8(8 - i / 解析単位) = (gy2 - gy1) / (gx2 - gx1)
                 dセンサ値列8(8 - i / 解析単位) = (ry2 - ry1) / (rx2 - rx1)
                 If (i Mod 解析単位x2) = 0 Then
@@ -780,11 +780,11 @@ Module Module1
         Dim ry1 As Single, ry2 As Single
         Dim rq1 As Single, rq2 As Single
 
-        gy1 = 生Glimp0値列前日(5 * 0 + 1, 1) : gq1 = gy1
-        ry1 = 生センサ値列前日(5 * 0 + 1, 1) : rq1 = ry1
+        gy1 = 補間Glimp0値列前日(5 * 0 + 1, 1) : gq1 = gy1
+        ry1 = 補間センサ値列前日(5 * 0 + 1, 1) : rq1 = ry1
         For i = 1 To 8
-            gy2 = 生Glimp0値列前日(5 * i + 1, 1) : gq2 = gy2
-            ry2 = 生センサ値列前日(5 * i + 1, 1) : rq2 = ry2
+            gy2 = 補間Glimp0値列前日(5 * i + 1, 1) : gq2 = gy2
+            ry2 = 補間センサ値列前日(5 * i + 1, 1) : rq2 = ry2
             k05(0, i) = (gy2 - gy1) / 5
             k05(1, i) = (ry2 - ry1) / 5
             If (i Mod 2) = 0 Then
@@ -802,11 +802,11 @@ Module Module1
         For i = 40 To D60x24 - 30 Step 5
             ii = (i - 40) / 5
             '直後30分の増加計算
-            kg30 = (生Glimp0値列前日(30 + i + 1, 1) - 生Glimp0値列前日(i + 1, 1)) / 30
-            kr30 = (生センサ値列前日(30 + i + 1, 1) - 生センサ値列前日(i + 1, 1)) / 30
+            kg30 = (補間Glimp0値列前日(30 + i + 1, 1) - 補間Glimp0値列前日(i + 1, 1)) / 30
+            kr30 = (補間センサ値列前日(30 + i + 1, 1) - 補間センサ値列前日(i + 1, 1)) / 30
             '直近３０分間の一次微係数分布（間隔５分）登録
-            a05data(0, ii, 0) = i : a05data(0, ii, 1) = 生Glimp0値列前日(i + 1, 1)
-            a05data(1, ii, 0) = i : a05data(1, ii, 1) = 生センサ値列前日(i + 1, 1)
+            a05data(0, ii, 0) = i : a05data(0, ii, 1) = 補間Glimp0値列前日(i + 1, 1)
+            a05data(1, ii, 0) = i : a05data(1, ii, 1) = 補間センサ値列前日(i + 1, 1)
             For j = 3 To 8
                 a05data(0, ii, j - 1) = k05(0, j)
                 a05data(1, ii, j - 1) = k05(1, j)
@@ -819,14 +819,14 @@ Module Module1
                 k05(0, j - 1) = k05(0, j)
                 k05(1, j - 1) = k05(1, j)
             Next
-            k05(0, 8) = (生Glimp0値列前日(5 + i + 1, 1) - 生Glimp0値列前日(i + 1, 1)) / 5
-            k05(1, 8) = (生センサ値列前日(5 + i + 1, 1) - 生センサ値列前日(i + 1, 1)) / 5
+            k05(0, 8) = (補間Glimp0値列前日(5 + i + 1, 1) - 補間Glimp0値列前日(i + 1, 1)) / 5
+            k05(1, 8) = (補間センサ値列前日(5 + i + 1, 1) - 補間センサ値列前日(i + 1, 1)) / 5
 
             If (i Mod 10) = 0 Then
                 ii = ii / 2
                 '直近３０分間の一次微係数分布（間隔５分）登録
-                a10data(0, ii, 0) = i : a10data(0, ii, 1) = 生Glimp0値列前日(i + 1, 1)
-                a10data(1, ii, 0) = i : a10data(1, ii, 1) = 生センサ値列前日(i + 1, 1)
+                a10data(0, ii, 0) = i : a10data(0, ii, 1) = 補間Glimp0値列前日(i + 1, 1)
+                a10data(1, ii, 0) = i : a10data(1, ii, 1) = 補間センサ値列前日(i + 1, 1)
                 For j = 1 To 4
                     a10data(0, ii, j + 1) = k10(0, j)
                     a10data(1, ii, j + 1) = k10(1, j)
@@ -839,8 +839,8 @@ Module Module1
                     k10(0, j - 1) = k10(0, j)
                     k10(1, j - 1) = k10(1, j)
                 Next
-                k10(0, 4) = (生Glimp0値列前日(10 + i + 1, 1) - 生Glimp0値列前日(i + 1, 1)) / 10
-                k10(1, 4) = (生センサ値列前日(10 + i + 1, 1) - 生センサ値列前日(i + 1, 1)) / 10
+                k10(0, 4) = (補間Glimp0値列前日(10 + i + 1, 1) - 補間Glimp0値列前日(i + 1, 1)) / 10
+                k10(1, 4) = (補間センサ値列前日(10 + i + 1, 1) - 補間センサ値列前日(i + 1, 1)) / 10
             End If
         Next
 
@@ -995,10 +995,10 @@ Module Module1
         Dim dセンサ値列当日(D60x24 + 2, 1) As Single           'センサ値一次微分列当日’
         Dim dセンサ値列前日(D60x24 + 2, 1) As Single           'センサ値一次微分列前日’
 
-        データ抽出(生Glimp0値列当日, 補間Glimp0値列当日, 生センサ値列当日, 補間センサ値列当日)
-        折れ線補間(生Glimp0値列当日, 補間Glimp0値列当日, 生センサ値列当日, 補間センサ値列当日, dGlimp0値列当日, dセンサ値列当日)
-        データ抽出(生Glimp0値列前日, 補間Glimp0値列前日, 生センサ値列前日, 補間センサ値列前日)
-        折れ線補間(生Glimp0値列前日, 補間Glimp0値列前日, 生センサ値列前日, 補間センサ値列前日, dGlimp0値列前日, dセンサ値列前日)
+        データ抽出(補間Glimp0値列当日, 間詰Glimp0値列当日, 補間センサ値列当日, 間詰センサ値列当日)
+        折れ線補間(補間Glimp0値列当日, 間詰Glimp0値列当日, 補間センサ値列当日, 間詰センサ値列当日, dGlimp0値列当日, dセンサ値列当日)
+        データ抽出(補間Glimp0値列前日, 間詰Glimp0値列前日, 補間センサ値列前日, 間詰センサ値列前日)
+        折れ線補間(補間Glimp0値列前日, 間詰Glimp0値列前日, 補間センサ値列前日, 間詰センサ値列前日, dGlimp0値列前日, dセンサ値列前日)
 
         Call 変動解析用傾き分布算出_直近()
         Call 変動解析用傾き分布算出_直近2(dGlimp0値列当日, dGlimp0値列前日, dセンサ値列当日, dセンサ値列前日)
@@ -1309,7 +1309,7 @@ Module Module1
 
     Sub 作図(ByVal 予測 As String())
         作図本体(
-            生Glimp0値列当日,
+            補間Glimp0値列当日,
             smbg当日,
             補間インスリンレベル値列当日,
             graphFn当日,
@@ -1319,7 +1319,7 @@ Module Module1
             予測(0)
         )
         作図本体(
-            生Glimp0値列前日,
+            補間Glimp0値列前日,
             smbg前日,
             補間インスリンレベル値列前日,
             graphFn前日,
@@ -1681,8 +1681,8 @@ Module Module1
                 If Event前日(i, 1)(0) <> "9" Then
                     If Event前日(i, 1)(0) = "8" Then
                         j = Integer.Parse(Event前日(i, 1).Substring(Event前日(i, 1).LastIndexOf("#") + 1))
-                        Debug.Print(Event前日(i, 0) & "," & 生Glimp0値列前日(Event前日(i, 0) + 1, 1) & "," & Event前日(i, 1) & "," & 生Glimp0値列前日(j + 1, 1))
-                        txt = Event前日(i, 0) & "," & Event前日(i, 1) & "=" & 生Glimp0値列前日(j + 1, 1) & DM & txt
+                        Debug.Print(Event前日(i, 0) & "," & 補間Glimp0値列前日(Event前日(i, 0) + 1, 1) & "," & Event前日(i, 1) & "," & 補間Glimp0値列前日(j + 1, 1))
+                        txt = Event前日(i, 0) & "," & Event前日(i, 1) & "=" & 補間Glimp0値列前日(j + 1, 1) & DM & txt
                     Else
                         txt = Event前日(i, 0) & "," & Event前日(i, 1) & DM & txt
                     End If
@@ -1708,19 +1708,19 @@ Module Module1
         sws.Close()
         sws = Nothing
 
-        s1 = 生Glimp0値列当日(1, 1)
+        s1 = 補間Glimp0値列当日(1, 1)
         For i = 2 To 1441
-            s1 &= ("," + 生Glimp0値列当日(i, 1).ToString)
+            s1 &= ("," + 補間Glimp0値列当日(i, 1).ToString)
         Next
         sws = New StreamWriter(当日血糖値列ファイル, False, Encoding.GetEncoding("shift_jis"))
         sws.Write(s1)
         sws.Close()
         sws = Nothing
 
-        s1 = 生Glimp0値列前日(1, 1)
+        s1 = 補間Glimp0値列前日(1, 1)
         sws = New StreamWriter(前日血糖値列ファイル, False, Encoding.GetEncoding("shift_jis"))
         For i = 2 To 1441
-            s1 &= ("," + 生Glimp0値列前日(i, 1).ToString)
+            s1 &= ("," + 補間Glimp0値列前日(i, 1).ToString)
         Next
         sws.Write(s1)
         sws.Close()
@@ -1735,8 +1735,8 @@ Module Module1
                 If Event前日(i, 1)(0) <> "9" Then
                     If Event前日(i, 1)(0) = "8" Then
                         j = Integer.Parse(Event前日(i, 1).Substring(Event前日(i, 1).LastIndexOf("#") + 1))
-                        Debug.Print(Event前日(i, 0) & "," & 生Glimp0値列前日(Event前日(i, 0) + 1, 1) & "," & Event前日(i, 1) & "," & 生Glimp0値列前日(j + 1, 1))
-                        txt = Event前日(i, 0) & "," & Event前日(i, 1) & "=" & 生Glimp0値列前日(j + 1, 1) & DM & txt
+                        Debug.Print(Event前日(i, 0) & "," & 補間Glimp0値列前日(Event前日(i, 0) + 1, 1) & "," & Event前日(i, 1) & "," & 補間Glimp0値列前日(j + 1, 1))
+                        txt = Event前日(i, 0) & "," & Event前日(i, 1) & "=" & 補間Glimp0値列前日(j + 1, 1) & DM & txt
                     Else
                         txt = Event前日(i, 0) & "," & Event前日(i, 1) & DM & txt
                     End If
