@@ -1,8 +1,0 @@
-C:\Users\hiro\documents\visual studio 2010\Projects\GlimpServer\GlimpServer\bin\Release\GlimpServer.exe
-C:\Users\hiro\documents\visual studio 2010\Projects\GlimpServer\GlimpServer\bin\Release\GlimpServer.pdb
-C:\Users\hiro\documents\visual studio 2010\Projects\GlimpServer\GlimpServer\bin\Release\GlimpServer.xml
-C:\Users\hiro\documents\visual studio 2010\Projects\GlimpServer\GlimpServer\obj\x86\Release\ConsoleApplication1.Resources.resources
-C:\Users\hiro\documents\visual studio 2010\Projects\GlimpServer\GlimpServer\obj\x86\Release\GlimpServer.vbproj.GenerateResource.Cache
-C:\Users\hiro\documents\visual studio 2010\Projects\GlimpServer\GlimpServer\obj\x86\Release\GlimpServer.exe
-C:\Users\hiro\documents\visual studio 2010\Projects\GlimpServer\GlimpServer\obj\x86\Release\GlimpServer.xml
-C:\Users\hiro\documents\visual studio 2010\Projects\GlimpServer\GlimpServer\obj\x86\Release\GlimpServer.pdb
